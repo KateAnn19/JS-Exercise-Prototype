@@ -46,20 +46,20 @@ function Person(name, age) {
 };
 
 Person.prototype.eat = function (someFood){
-  if(someFood === 'edible' && this.stomach.length <= 10){
+  if(this.stomach.length === 10){
+    return this.stomach;
+  }
+  else{
     this.stomach.push(someFood);
   }
-  return this.stomach;
-};
+  };
 
 Person.prototype.poop = function (){
   return this.stomach = [];
 };
 
 Person.prototype.toString = function (){
-  {
     return `${this.name} + ',' + ${this.age}`;
-    };
 }
 
 
@@ -81,19 +81,28 @@ function Car(model, milesPerGallon) {
   this.model = model;
   this.milesPerGallon = milesPerGallon;
   this.tank = 0;
-  this.odometer = 0;
-  this.fill = function(gallons){
-                return this.tank + gallons;
-              }
-  this.drive = function (distance){
-                this.odometer = this.odometer + distance;
-                this.tank = this.odometer / this.fill; 
-              }      
-      
+  this.odometer = 0;    
 }
-if(this.tank === 0){
-  return `I ran out of fuel at ${this.odometer}`;
+
+
+Car.prototype.fill = function(gallons){
+    this.tank = this.tank + gallons;
+    return this.tank;
 }
+
+Car.prototype.drive = function (distance){
+  if(this.tank >= (distance/this.milesPerGallon)){
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - (distance/this.milesPerGallon); 
+  }
+  else{
+    this.odometer = this.odometer + (this.milesPerGallon * this.tank);
+    this.tank = 0;
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }      
+}
+
+     
 
 /*
   TASK 3
@@ -118,10 +127,11 @@ function Baby(name, age, favoriteToy) {
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Principle 1: Window/Global Object Binding  //'this' is the window
+  2. Principle 2: Implicit Binding //'this' is the object
+  3. Principle 3: New binding //'this' has to do with constructor functions. Whenever a constructor function is used, 'this' refers to the specific
+  instance of the object that is created and returned by the constructor function
+  4. Principle 4: Explicit binding//'this' whenever .apply(), .bind(), or .call() are used 'this' is explicitly defined
 */
 
 
